@@ -1,17 +1,19 @@
 {
-  "backed_up_at": "2026-10-25T04:50:37.815543+00:00",
+  "backed_up_at": "2026-10-25T05:29:11Z",
   "reader": {
     "source_commit": "38de9218c6ec7abe9110d08792eb58cba633b8f1",
     "site_project_id": "appgprj_6add6b2bd5148191bee564f2d750cc9f",
     "url": "https://hn-pocket-archive.karmi-nguyen.chatgpt.site",
-    "r2_binding": "BUCKET"
+    "r2_binding": "BUCKET",
+    "saved_version_id": "appgprj_6add6b2bd5148191bee564f2d750cc9f~appgver_fae34ad1ed18819184abc945919b5a96"
   },
   "updater": {
     "source_commit": "0689afcef044cbbf6c9bbfb380d3037f798e4eb2",
     "site_project_id": "appgprj_6add7d12de7081919dc2dfae6517a84c",
     "url": "https://margin-private-updater.karmi-nguyen.chatgpt.site",
     "audience": "owner-private",
-    "r2_binding": "BUCKET"
+    "r2_binding": "BUCKET",
+    "saved_version_id": "appgprj_6add7d12de7081919dc2dfae6517a84c~appgver_5679bf8f979c81919480497d28957e14"
   },
   "capture_schedule": {
     "automation_id": "Automation_4c2dfbd42dac8191bdc742df3962feb6",
@@ -21,20 +23,32 @@
     ]
   },
   "secondary_backup": {
-    "automation_id": null,
+    "automation_id": "Automation_c36647ce6c088191bcad7fcc89919c8c",
     "destination": "Separate owner-private updater R2 bucket",
-    "status": "awaiting_deployed_verification",
-    "planned_schedule": "Daily at 09:30 UTC",
+    "status": "enabled_and_initial_backup_verified",
     "retention": "Daily manifests and monthly checkpoints retained indefinitely",
     "restore_checks": "All retained editions verified each calendar month, bounded across requests",
-    "provider_independent": false
+    "provider_independent": false,
+    "enabled": true,
+    "verified_at": "2026-10-25T05:27:53.284Z",
+    "initial_totals": {
+      "editions": 1,
+      "stories": 100,
+      "saved_articles": 77,
+      "comments": 3006
+    },
+    "independent_download_restore_verified": true,
+    "export_sha256": "4e69a579abb532760326aff55f9a6bce8d42f458fb2a16218ad907dede7620b2",
+    "schedule": "Daily at 09:30 UTC"
   },
   "secrets_included": false,
   "auth_data_included": false,
   "failure_watch": {
-    "automation_id": null,
-    "planned_schedule": "11:00 and 23:00 UTC",
-    "status": "pending"
+    "automation_id": "Automation_e23c1d3e13a08191bc5e454ae91e82b7",
+    "status": "enabled_health_endpoint_verified",
+    "enabled": true,
+    "delivery": "Task results; notification settings are user-controlled",
+    "schedule": "11:00 and 23:00 UTC"
   },
   "device_verification": {
     "automated": "Chromium desktop, phone and tablet viewports: offline close/reopen, articles, comments, integrity, shell expiry and overflow checks passed",
@@ -43,6 +57,8 @@
   "source_mirror": {
     "method": "Native source pre-push hook plus scheduled drift check",
     "reader_commit": "38de9218c6ec7abe9110d08792eb58cba633b8f1",
-    "updater_commit": "0689afcef044cbbf6c9bbfb380d3037f798e4eb2"
+    "updater_commit": "0689afcef044cbbf6c9bbfb380d3037f798e4eb2",
+    "hooks_installed_and_exercised": true,
+    "drift_check_automation_id": "Automation_c36647ce6c088191bcad7fcc89919c8c"
   }
 }

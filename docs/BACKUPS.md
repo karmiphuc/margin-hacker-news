@@ -2,6 +2,8 @@
 
 ## Current backup destination
 
+**Verified 2026-10-25:** the separate bucket holds 1 edition, 100 stories, 77 saved articles and 3,006 comments. Its downloaded export passed SHA-256 verification and reconstructed snapshot/article/comment caches. Daily maintenance is enabled at 09:30 UTC, with monthly restore checks; failure watches run at 11:00/23:00 UTC.
+
 Routine backups now target the private updater's separate R2 bucket, with daily manifests and retained monthly checkpoints. See [MAINTENANCE_RUNBOOK.md](MAINTENANCE_RUNBOOK.md) for storage semantics and `SOURCE_STATE.json` for verification/schedule state. Use `MARGIN_BACKUP_SOURCE=secondary` with the exporter to download verified copies without contacting the primary reader. Recovery and provider/account-loss limitations are in [RECOVERY.md](RECOVERY.md).
 
 The earlier initial export was verified locally (1 edition, 100 stories, 77 articles, 3,006 comments), but GitHub release upload returned HTTP 401. No content was uploaded into GitHub. That optional route below is not scheduled.

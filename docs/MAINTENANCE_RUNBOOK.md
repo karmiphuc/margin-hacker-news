@@ -1,5 +1,13 @@
 # Daily protection and source mirror
 
+## Active schedules
+
+- Daily backup, monthly restore checks, and source drift: `Automation_c36647ce6c088191bcad7fcc89919c8c`, 09:30 UTC.
+- Failure watch: `Automation_e23c1d3e13a08191bc5e454ae91e82b7`, 11:00 and 23:00 UTC.
+- Existing capture: `Automation_4c2dfbd42dac8191bdc742df3962feb6`, 08:00 and 20:00 UTC.
+
+Initial maintenance and secondary-download restoration passed on 2026-10-25. These checks verify the endpoints; schedule creation does not mean future task execution or notification delivery has occurred.
+
 ## Boundaries
 
 Reader Site: `appgprj_6add6b2bd5148191bee564f2d750cc9f` (public password gate).
