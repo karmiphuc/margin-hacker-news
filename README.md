@@ -23,7 +23,7 @@ Source and recovery backup for [Margin](https://hn-pocket-archive.karmi-nguyen.c
 | `docs/` | Hosting, operational, backup and recovery instructions |
 | `SOURCE_STATE.json` | Original source commits and deployed project identities at backup time |
 
-This is a Worker-backed app, not a GitHub Pages-only site. GitHub stores the code; secondary content upload is pending, and production continues to run on its existing host.
+This is a Worker-backed app, not a GitHub Pages-only site. GitHub stores the code; private secondary content stays on the existing hosting provider. Production continues to run on its existing host.
 
 ## Local development
 
@@ -38,30 +38,31 @@ npm run dev
 
 Open `http://localhost:3000`. Authentication is intentionally enabled locally. See [deployment/setup instructions](docs/DEPLOYMENT.md) for creating test-only setup credentials. Local data goes in ignored `.data/`.
 
-The updater is dependency-free:
+Build the updater separately:
 
 ```sh
 cd updater
+npm ci
 npm run build
 npm test
 ```
 
-## Content backups
+## Reliability and backups
 
-**Status (2026-10-25): code backup is complete. Content export and local restore were verified, but GitHub rejected release asset uploads (HTTP 401). Monthly backups are not enabled.** Existing production archives and the reader’s download/export feature remain available.
+- A separate owner-private updater bucket holds daily backup manifests, immutable saved editions and retained monthly checkpoints. Copies include articles, supported binaries and comments, never authentication records.
+- Monthly restore checks reconstruct and validate each retained edition; app status shows the last successful backup and restore check. Backup work reads stored content only and never refetches HN/publishers.
+- Scheduled health checks report missed/partial captures, stale/failed backups and overdue restore checks through task results. Enable Tasks notifications to receive them away from the app.
+- Device downloads have checksums, shell readiness checks and per-edition counts. Settings include recovery instructions, bookmark/read-status export/import and a real-device airplane-mode checklist.
+- Native pre-push hooks back up code to GitHub before publication; daily deployed-source drift checking covers other checkouts. Hooks must be installed in every new native checkout.
 
-The repository is public. The prepared backup tooling targets **draft release assets** for repository collaborators. They are not committed to public Git history. Keep archive releases in draft; publishing one would expose its assets.
+See `SOURCE_STATE.json` for current activation/verification status. Both storage buckets use the same hosting provider: periodically download an export to a location outside that account for full provider-loss recovery. GitHub contains code and recovery tooling, not public article archives. The earlier GitHub draft-release upload route remains blocked by upload authentication; it is not the scheduled backup destination.
 
-The prepared monthly backup workflow exports already-saved server content and creates a gzip JSON Lines archive with a SHA-256 manifest. It does **not** scrape HN, contact publishers, or recapture articles. Archives include saved editions, article/PDF/image copies, and discussions, but not passwords, sessions, recovery secrets, or browser-local bookmarks/read status.
-
-See [backup and restore instructions](docs/BACKUPS.md), [scheduled-task runbook](docs/BACKUP_RUNBOOK.md), and the [Releases page](https://github.com/karmiphuc/margin-hacker-news/releases) while signed in with collaborator access.
+Read [maintenance instructions](docs/MAINTENANCE_RUNBOOK.md), [recovery instructions](docs/RECOVERY.md), and [backup formats](docs/BACKUPS.md).
 
 ## Operational references
 
 - [Application behavior and capture protocol](docs/APP_OPERATIONS.md)
 - [Deployment, secret inventory, and fresh-host recovery](docs/DEPLOYMENT.md)
 - [Backup formats and restoration](docs/BACKUPS.md)
-
-Source changes are not automatically mirrored from hosting into GitHub. After changing the live reader or updater, update this repository and `SOURCE_STATE.json`. The prepared periodic workflow backs up content, not uncommitted or unmirrored code changes.
 
 The repository's existing Apache-2.0 `LICENSE` is preserved. Publisher articles and HN comments in private content backups remain their authors' content and are not relicensed by the source-code license.

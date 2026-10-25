@@ -1,10 +1,10 @@
 # Secondary content backups
 
-## Current status
+## Current backup destination
 
-The initial export was verified locally on 2026-10-25: 1 edition, 100 stories, 77 saved articles, and 3,006 comments. Restoring it reconstructed the saved edition and reusable caches without contacting HN or publishers. No content archive has been uploaded to GitHub: release asset upload returned HTTP 401 despite source pushes succeeding. GitHub Actions secret management also returned HTTP 403. No monthly schedule is enabled. The empty draft created during verification was removed.
+Routine backups now target the private updater's separate R2 bucket, with daily manifests and retained monthly checkpoints. See [MAINTENANCE_RUNBOOK.md](MAINTENANCE_RUNBOOK.md) for storage semantics and `SOURCE_STATE.json` for verification/schedule state. Use `MARGIN_BACKUP_SOURCE=secondary` with the exporter to download verified copies without contacting the primary reader. Recovery and provider/account-loss limitations are in [RECOVERY.md](RECOVERY.md).
 
-An authenticated GitHub connection that can upload release assets is required before activating the prepared monthly workflow. Do not treat the local export as a durable off-site backup. Production saved data remains in its existing bucket.
+The earlier initial export was verified locally (1 edition, 100 stories, 77 articles, 3,006 comments), but GitHub release upload returned HTTP 401. No content was uploaded into GitHub. That optional route below is not scheduled.
 
 ## Planned storage and visibility
 

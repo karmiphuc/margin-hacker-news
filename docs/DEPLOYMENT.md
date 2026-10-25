@@ -7,7 +7,7 @@
 | Reader | `appgprj_6add6b2bd5148191bee564f2d750cc9f` | https://hn-pocket-archive.karmi-nguyen.chatgpt.site | Public login page; server-side password gate protects data |
 | Private updater | `appgprj_6add7d12de7081919dc2dfae6517a84c` | https://margin-private-updater.karmi-nguyen.chatgpt.site | Owner-private platform boundary |
 
-The reader's logical R2 binding is `BUCKET`; there is no SQL database. Existing hosting IDs are retained for recovery of these exact deployments. Do not reuse another person's IDs when creating a new installation.
+The reader and private updater each have their own logical R2 binding named `BUCKET`, provisioned separately per Site; there is no SQL database. Existing hosting IDs are retained for recovery of these exact deployments. Do not reuse another person's IDs when creating a new installation.
 
 Build output is `dist/server/index.js`. A Sites deployment archive contains `.openai/hosting.json` and `dist/server/index.js` at those project-relative paths. Follow Sites source-push, save-version and deployment operations; never change the updater's audience to public. The updater's equivalent output is built inside `updater/`.
 
@@ -26,9 +26,21 @@ For a new or local installation, generate a random setup token with `crypto.rand
 ## Scheduling
 
 - Capture: enabled hosted task `Automation_4c2dfbd42dac8191bdc742df3962feb6`, 08:00/20:00 UTC. It uses fresh service access to the private updater and calls `/api/capture` sequentially.
-- Secondary content backup: monthly hosted task linked to the reader. Its exact ID is recorded in `SOURCE_STATE.json` after activation. It uses `/api/backup` on the private updater and uploads a draft GitHub release.
+- Secondary content backup: daily private-updater maintenance, with retained monthly checkpoints and monthly restore verification. Schedule IDs and activation state are recorded in `SOURCE_STATE.json`.
+- Failure watch: checks capture/backup health after capture grace periods and reports failures through task notifications.
+- Source mirror: native pre-push hooks plus a daily deployed-source drift check. See MAINTENANCE_RUNBOOK.md.
 
-GitHub Actions secrets could not be managed by the available GitHub integration at setup time. The monthly task therefore uses the connected services at runtime and stores no credentials in a workflow or repository.
+## Keep source backed up before deployment
+
+Clone GitHub to a clean checkout, open both native Site repositories using fresh authorized source credentials, then install hooks:
+
+```sh
+node scripts/install-mirror-hooks.mjs /absolute/github-checkout /absolute/reader-checkout /absolute/updater-checkout
+```
+
+Install hooks again in every new native checkout; hooks are local Git configuration and do not travel with clones. Commit source changes, run tests/builds, then push native source. The hook copies committed allowlisted files from both native repositories to GitHub and pushes there first; a failed backup blocks the native push. Never use `--no-verify` for publication. Preserve any existing hooks when integrating. After native push, save/deploy the exact source commit through Sites and verify the returned status. Source mirror records committed code; it is not itself proof of deployment. Daily drift checking reconciles to the actual deployed versions.
+
+The hook uses the connected GitHub CLI, strips transient native Git auth headers, and never copies runtime data, authentication records, or `.env` files. Keep all new credentials in the hosting secret manager. GitHub release uploads/Actions secret management remain unavailable with the original connection; routine backups now use the private updater's separate bucket instead.
 
 ## Restore onto a new host
 
