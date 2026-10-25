@@ -1,7 +1,7 @@
 {
   "backed_up_at": "2026-10-25T05:29:11Z",
   "reader": {
-    "source_commit": "38de9218c6ec7abe9110d08792eb58cba633b8f1",
+    "source_commit": "5e8004c47a3c05e65dc2f97f0e28a85c04cc15fa",
     "site_project_id": "appgprj_6add6b2bd5148191bee564f2d750cc9f",
     "url": "https://hn-pocket-archive.karmi-nguyen.chatgpt.site",
     "r2_binding": "BUCKET",
@@ -56,7 +56,7 @@
   },
   "source_mirror": {
     "method": "Native source pre-push hook plus scheduled drift check",
-    "reader_commit": "38de9218c6ec7abe9110d08792eb58cba633b8f1",
+    "reader_commit": "5e8004c47a3c05e65dc2f97f0e28a85c04cc15fa",
     "updater_commit": "0689afcef044cbbf6c9bbfb380d3037f798e4eb2",
     "hooks_installed_and_exercised": true,
     "drift_check_automation_id": "Automation_c36647ce6c088191bcad7fcc89919c8c"
