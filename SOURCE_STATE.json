@@ -1,0 +1,30 @@
+{
+  "backed_up_at": "2026-10-25T04:50:37.815543+00:00",
+  "reader": {
+    "source_commit": "d9e3c6e260f07d79ee93b3a183d4c8cbfd5a4f30",
+    "site_project_id": "appgprj_6add6b2bd5148191bee564f2d750cc9f",
+    "url": "https://hn-pocket-archive.karmi-nguyen.chatgpt.site",
+    "r2_binding": "BUCKET"
+  },
+  "updater": {
+    "source_commit": "11523a983fdd660199f6a574ec0d433482fe451d",
+    "site_project_id": "appgprj_6add7d12de7081919dc2dfae6517a84c",
+    "url": "https://margin-private-updater.karmi-nguyen.chatgpt.site",
+    "audience": "owner-private"
+  },
+  "capture_schedule": {
+    "automation_id": "Automation_4c2dfbd42dac8191bdc742df3962feb6",
+    "times_utc": [
+      "08:00",
+      "20:00"
+    ]
+  },
+  "secondary_backup": {
+    "automation_id": null,
+    "planned_schedule": "First of each month at 09:17 UTC",
+    "destination": "GitHub draft releases",
+    "status": "pending_first_backup_verification"
+  },
+  "secrets_included": false,
+  "auth_data_included": false
+}

@@ -1,0 +1,6 @@
+{
+  "name": "margin-reader",
+  "main": "dist/server/index.js",
+  "compatibility_date": "2025-01-01",
+  "r2_buckets": [{ "binding": "BUCKET", "bucket_name": "REPLACE_WITH_RECOVERY_BUCKET" }]
+}

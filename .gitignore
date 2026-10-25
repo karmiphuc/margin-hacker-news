@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.data/
+*.tar.gz
+.env
+.env.*
+!.env.example
+backups/
+.restore/
+*.jsonl
+*.jsonl.gz

@@ -1,0 +1,13 @@
+# Monthly backup task runbook
+
+Destination: `karmiphuc/margin-hacker-news` on GitHub. Keep its existing source visibility; content goes only into draft releases.
+
+1. Read this file and the current repository state using the connected GitHub service. Use the existing authenticated GitHub CLI for clone/release upload when available. Never start an interactive login or invent credentials. If write access is unavailable, stop and report the blocker.
+2. Use Sites `get_site` for owner-private updater project `appgprj_6add7d12de7081919dc2dfae6517a84c`. Confirm it remains owner-private and obtain its current live URL and fresh `siwc_bypass_bearer_token`. Do not reuse an old token from a previous run.
+3. Clone the repository into a fresh workspace or update a clean checkout without discarding local work. Run `node --use-env-proxy scripts/archive-backup.mjs <temporary-output-directory>` with `MARGIN_PRIVATE_UPDATER_URL`, `MARGIN_SITE_SERVICE_TOKEN`, and the repository HEAD as `MARGIN_SOURCE_COMMIT` passed only through process memory/environment. Use a non-echoed stdin helper to hand credentials to a process if necessary. Never print, write, or commit them.
+4. This exporter calls only `GET /api/backup` on that private Site, with its token in `OAI-Sites-Authorization`. The token must be sent only to that Site. The private relay authenticates the request to the reader. Do not call capture endpoints, scrape HN, fetch publishers, request the user's password, or republish either Site.
+5. Inspect the export manifest and verify its checksum/record totals. Run `node scripts/publish-backup.mjs <archive-path> <manifest-path>`. It creates/reuses the month's draft release and uploads a timestamped file pair. It refuses a published release. Do not change a draft to published or fall back to committing cache files into public Git history.
+6. Read the release back. Confirm it is still a draft and both assets exist. Download the uploaded pair into another temporary directory and run `node scripts/unpack-archive.mjs <archive> <manifest> <new-restore-directory>` to verify recovery. Report the draft release link and counts, without credentials or article bodies.
+7. Remove temporary local exports/restored copies after verification. Leave existing release assets and saved server data untouched. If anything fails, retain previous backups and report the precise blocker. Retry transient transport failures at most three times with increasing delays.
+
+This monthly task backs up content. It does not synchronize future source changes automatically; code changes should be committed to this repository when made.
