@@ -21,7 +21,7 @@ for(const [name,source,prefix] of [['reader',reader,''],['updater',updater,'upda
  }
 }
 for(const old of before.paths)if(!paths.includes(old)){if(old.startsWith('src/')||old.startsWith('public/')||old.startsWith('updater/')||old==='docs/APP_OPERATIONS.md')rmSync(join(root,old),{force:true})}
-const state=JSON.parse(readFileSync(join(root,'SOURCE_STATE.json'),'utf8'));state.reader.source_commit=hashes.reader;state.updater.source_commit=hashes.updater;state.source_mirror={method:'Native source pre-push hook plus scheduled drift check',reader_commit:hashes.reader,updater_commit:hashes.updater};
+const state=JSON.parse(readFileSync(join(root,'SOURCE_STATE.json'),'utf8'));state.reader.source_commit=hashes.reader;state.updater.source_commit=hashes.updater;state.source_mirror={...state.source_mirror,method:'Native source pre-push hook plus scheduled drift check',reader_commit:hashes.reader,updater_commit:hashes.updater};
 writeFileSync(join(root,'SOURCE_STATE.json'),JSON.stringify(state,null,2)+'\n');writeFileSync(join(root,'.source-mirror.json'),JSON.stringify({paths},null,2)+'\n');
 git(root,'add','--',...new Set([...paths,...before.paths,'SOURCE_STATE.json','.source-mirror.json']));
 if(git(root,'diff','--cached','--name-only'))git(root,'commit','-m','Mirror deployed Margin reader and updater sources');
