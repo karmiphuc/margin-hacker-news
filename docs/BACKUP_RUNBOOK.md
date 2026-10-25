@@ -1,5 +1,7 @@
 # Monthly backup task runbook
 
+**Not activated:** initial release asset upload returned HTTP 401. Verify upload and downloaded restoration before creating a monthly schedule.
+
 Destination: `karmiphuc/margin-hacker-news` on GitHub. Keep its existing source visibility; content goes only into draft releases.
 
 1. Read this file and the current repository state using the connected GitHub service. Use the existing authenticated GitHub CLI for clone/release upload when available. Never start an interactive login or invent credentials. If write access is unavailable, stop and report the blocker.

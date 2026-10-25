@@ -23,7 +23,7 @@ Source and recovery backup for [Margin](https://hn-pocket-archive.karmi-nguyen.c
 | `docs/` | Hosting, operational, backup and recovery instructions |
 | `SOURCE_STATE.json` | Original source commits and deployed project identities at backup time |
 
-This is a Worker-backed app, not a GitHub Pages-only site. GitHub stores the code and secondary backups; production continues to run on its existing host.
+This is a Worker-backed app, not a GitHub Pages-only site. GitHub stores the code; secondary content upload is pending, and production continues to run on its existing host.
 
 ## Local development
 
@@ -48,9 +48,11 @@ npm test
 
 ## Content backups
 
-The repository is public, but **content archives are uploaded only as draft release assets** for repository collaborators. They are not committed to public Git history. Keep archive releases in draft; publishing one would expose its assets.
+**Status (2026-10-25): code backup is complete. Content export and local restore were verified, but GitHub rejected release asset uploads (HTTP 401). Monthly backups are not enabled.** Existing production archives and the reader’s download/export feature remain available.
 
-The monthly backup task exports already-saved server content and creates a gzip JSON Lines archive with a SHA-256 manifest. It does **not** scrape HN, contact publishers, or recapture articles. Archives include saved editions, article/PDF/image copies, and discussions, but not passwords, sessions, recovery secrets, or browser-local bookmarks/read status.
+The repository is public. The prepared backup tooling targets **draft release assets** for repository collaborators. They are not committed to public Git history. Keep archive releases in draft; publishing one would expose its assets.
+
+The prepared monthly backup workflow exports already-saved server content and creates a gzip JSON Lines archive with a SHA-256 manifest. It does **not** scrape HN, contact publishers, or recapture articles. Archives include saved editions, article/PDF/image copies, and discussions, but not passwords, sessions, recovery secrets, or browser-local bookmarks/read status.
 
 See [backup and restore instructions](docs/BACKUPS.md), [scheduled-task runbook](docs/BACKUP_RUNBOOK.md), and the [Releases page](https://github.com/karmiphuc/margin-hacker-news/releases) while signed in with collaborator access.
 
@@ -60,6 +62,6 @@ See [backup and restore instructions](docs/BACKUPS.md), [scheduled-task runbook]
 - [Deployment, secret inventory, and fresh-host recovery](docs/DEPLOYMENT.md)
 - [Backup formats and restoration](docs/BACKUPS.md)
 
-Source changes are not automatically mirrored from hosting into GitHub. After changing the live reader or updater, update this repository and `SOURCE_STATE.json`. The periodic task backs up content, not uncommitted or unmirrored code changes.
+Source changes are not automatically mirrored from hosting into GitHub. After changing the live reader or updater, update this repository and `SOURCE_STATE.json`. The prepared periodic workflow backs up content, not uncommitted or unmirrored code changes.
 
 The repository's existing Apache-2.0 `LICENSE` is preserved. Publisher articles and HN comments in private content backups remain their authors' content and are not relicensed by the source-code license.

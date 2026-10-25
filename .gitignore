@@ -9,3 +9,5 @@ backups/
 .restore/
 *.jsonl
 *.jsonl.gz
+
+.restore-*/

@@ -1,8 +1,14 @@
 # Secondary content backups
 
-## Storage and visibility
+## Current status
 
-Monthly exports live in GitHub **draft releases**, normally tagged `archive-YYYY-MM`. The source repository remains public. Draft release assets are restricted to repository collaborators; do not publish an archive release. The upload script refuses an existing release that is not a draft.
+The initial export was verified locally on 2026-10-25: 1 edition, 100 stories, 77 saved articles, and 3,006 comments. Restoring it reconstructed the saved edition and reusable caches without contacting HN or publishers. No content archive has been uploaded to GitHub: release asset upload returned HTTP 401 despite source pushes succeeding. GitHub Actions secret management also returned HTTP 403. No monthly schedule is enabled. The empty draft created during verification was removed.
+
+An authenticated GitHub connection that can upload release assets is required before activating the prepared monthly workflow. Do not treat the local export as a durable off-site backup. Production saved data remains in its existing bucket.
+
+## Planned storage and visibility
+
+Once upload access is available, monthly exports will live in GitHub **draft releases**, normally tagged `archive-YYYY-MM`. The source repository remains public. Draft release assets are restricted to repository collaborators; do not publish an archive release. The upload script refuses an existing release that is not a draft.
 
 Each run uploads timestamped `.jsonl.gz` and `.manifest.json` files. A second run in the same month adds another timestamped pair rather than overwriting an earlier backup. Previous monthly backups are retained. Source code stays in normal Git history; large cached content never enters that history.
 
