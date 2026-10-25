@@ -35,3 +35,13 @@ Preserve the enabled 08:00/20:00 UTC schedule. Routine updates do not republish.
 ## Limits
 
 The archive starts on first capture; historical ranks cannot be backfilled. HN has no public comment scores, so we store the first 50 available comments in thread order (root threads ranked using official HN item kids). Replies retain source order. Saved HTML article copies are readable text with source attribution. Direct PDF, PNG, JPEG, GIF, WebP, and AVIF links are saved as complete files up to 10 MB, and plain text/Markdown sources are supported. Embedded media and videos are not downloaded. Pages behind access restrictions, non-HTML content, blocked publishers and extractor failures are explicitly marked unavailable. Partial old editions can still be downloaded. Browser eviction or clearing site data removes local downloads; request persistent storage where supported. Bookmarks and read state are device local; archive content is retained independently of them and independently of the password.
+
+## Reliability operations
+
+`GET /api/health` (password or updater authenticated) reports capture completeness, saved counts, missed scheduled editions after a two-hour grace period, stale/failed secondary backups, and due restore checks. `POST /api/operations` accepts status only from the private updater's runtime key, never from an ordinary password session. The updater now owns a separate private R2 bucket for daily backup manifests and retained monthly checkpoints; the reader does not expose that bucket.
+
+The archive status panel shows server protection and device downloads separately. Save offline writes a checksum and verifies storage; the readiness action checks the shell and saved editions. The service worker caches only an authenticated reader shell, preserving it when the online session expires. Device downloads remain usable offline and are cleared by explicit sign-out. Settings provide recovery instructions, bookmark/read-status export/import, and the physical iPhone/iPad airplane-mode checklist.
+
+Optional browser QA: run `node scripts/qa-offline.cjs` with Playwright and Chromium available after building. This tests desktop/phone/tablet layouts and offline reopen using synthetic data; it is not a physical iOS certification.
+
+For future deployments, use the GitHub repository's `scripts/install-mirror-hooks.mjs` to attach its source mirror to both native checkouts before pushing. The hook backs up committed source before the hosting push; a scheduled drift check catches deployments from other checkouts. GitHub: https://github.com/karmiphuc/margin-hacker-news .

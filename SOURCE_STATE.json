@@ -1,13 +1,13 @@
 {
   "backed_up_at": "2026-10-25T04:50:37.815543+00:00",
   "reader": {
-    "source_commit": "d9e3c6e260f07d79ee93b3a183d4c8cbfd5a4f30",
+    "source_commit": "38de9218c6ec7abe9110d08792eb58cba633b8f1",
     "site_project_id": "appgprj_6add6b2bd5148191bee564f2d750cc9f",
     "url": "https://hn-pocket-archive.karmi-nguyen.chatgpt.site",
     "r2_binding": "BUCKET"
   },
   "updater": {
-    "source_commit": "11523a983fdd660199f6a574ec0d433482fe451d",
+    "source_commit": "0689afcef044cbbf6c9bbfb380d3037f798e4eb2",
     "site_project_id": "appgprj_6add7d12de7081919dc2dfae6517a84c",
     "url": "https://margin-private-updater.karmi-nguyen.chatgpt.site",
     "audience": "owner-private",
@@ -39,5 +39,10 @@
   "device_verification": {
     "automated": "Chromium desktop, phone and tablet viewports: offline close/reopen, articles, comments, integrity, shell expiry and overflow checks passed",
     "physical_ios": "Requires actual iPhone/iPad Home Screen and airplane-mode check; checklist in app"
+  },
+  "source_mirror": {
+    "method": "Native source pre-push hook plus scheduled drift check",
+    "reader_commit": "38de9218c6ec7abe9110d08792eb58cba633b8f1",
+    "updater_commit": "0689afcef044cbbf6c9bbfb380d3037f798e4eb2"
   }
 }
