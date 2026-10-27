@@ -1,0 +1,44 @@
+// Produces local evidence, not a signed attestation or a Sites deployment gate.
+import {spawnSync} from 'node:child_process';
+import {writeFileSync, readFileSync, rmSync, existsSync} from 'node:fs';
+import {resolve, dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {artifacts, cleanCommit, fileHashes} from './lib/release-evidence.mjs';
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const output = process.argv[2];
+if (!output || process.argv.length !== 3) throw Error('Usage: node scripts/release-check.mjs /absolute/path/to/evidence.json');
+const destination = resolve(output);
+if (!output.startsWith('/') || destination === root || destination.startsWith(root + '/')) throw Error('Evidence path must be absolute and outside the checkout');
+if (existsSync(destination)) throw Error('Evidence destination already exists; use a new path');
+const commit = cleanCommit(root), checks = {};
+function run(name, command, args, cwd=root) {
+  console.log(`Running ${name}...`);
+  const result = spawnSync(command, args, {cwd, stdio:'inherit', env:process.env});
+  if (result.error || result.status !== 0) throw Error(`${name} failed${result.error ? ': '+result.error.message : ''}`);
+  checks[name] = 'passed';
+}
+run('reader-install','npm',['ci','--include=dev']);
+run('updater-install','npm',['ci','--include=dev'],resolve(root,'updater'));
+const browserPath = process.env.CHROMIUM_PATH || '/usr/bin/chromium';
+const browserVersion = spawnSync(browserPath,['--version'],{encoding:'utf8'});
+if (browserVersion.error || browserVersion.status !== 0 || !browserVersion.stdout.trim()) throw Error('Could not record Chromium version');
+const runtime = {node:process.version, playwright:JSON.parse(readFileSync(resolve(root,'node_modules/playwright/package.json'),'utf8')).version, chromium:browserVersion.stdout.trim()};
+rmSync(resolve(root,'dist'),{recursive:true,force:true});
+rmSync(resolve(root,'updater/dist'),{recursive:true,force:true});
+run('reader-build','npm',['run','build']);
+run('updater-build','npm',['run','build'],resolve(root,'updater'));
+const tarArgs = ['--sort=name','--mtime=@0','--owner=0','--group=0','--numeric-owner','-czf','dist/release.tar.gz','.openai/hosting.json','dist/server/index.js'];
+run('reader-package','tar',tarArgs);
+run('updater-package','tar',tarArgs,resolve(root,'updater'));
+const built = fileHashes(root);
+for (const prefix of ['', 'updater/']) if (built[prefix+'.openai/hosting.json'] !== built[prefix+'dist/.openai/hosting.json']) throw Error('Packaged hosting configuration differs from build output');
+run('reader-tests','npm',['test']);
+run('updater-tests','npm',['test'],resolve(root,'updater'));
+run('offline-browser','node',['scripts/qa-offline.cjs']);
+run('upgrade-browser','node',['scripts/qa-upgrade.cjs']);
+run('recovery-drill','node',['scripts/qa-recovery.mjs']);
+if (cleanCommit(root) !== commit) throw Error('Source changed during validation');
+const finalHashes = fileHashes(root);
+if (artifacts.some(path => built[path] !== finalHashes[path])) throw Error('Build artifact changed during validation');
+writeFileSync(destination, JSON.stringify({format:'margin-release-evidence-v1', commit, createdAt:new Date().toISOString(), runtime, checks, artifacts:finalHashes}, null, 2)+'\n', {mode:0o600, flag:'wx'});
+console.log(`Release evidence written to ${destination}. Verify it against GitHub before deployment.`);

@@ -1,0 +1,3 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {validatePush} from '../scripts/lib/push-policy.mjs';
+const sha='1'.repeat(40),remote='2'.repeat(40);
+test('push guard accepts exact main HEAD, ignores no-op and rejects wrong ref, deletion and untested commit',()=>{assert.equal(validatePush(`refs/heads/main ${sha} refs/heads/main ${remote}`,sha),true);assert.equal(validatePush('',sha),false);for(const line of [`refs/heads/main ${remote} refs/heads/main ${sha}`,`refs/heads/other ${sha} refs/heads/main ${remote}`,`(delete) ${'0'.repeat(40)} refs/heads/main ${remote}`])assert.throws(()=>validatePush(line,sha))});

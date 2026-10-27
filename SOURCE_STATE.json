@@ -68,5 +68,18 @@
     "updater_commit": "0689afcef044cbbf6c9bbfb380d3037f798e4eb2",
     "hooks_installed_and_exercised": true,
     "drift_check_automation_id": "Automation_c36647ce6c088191bcad7fcc89919c8c"
+  },
+  "external_backup": {
+    "preference": "GitHub private draft attachments first; private Google Drive fallback",
+    "provider": "Google Drive",
+    "folder_id": "1Dz3u5X2jngGYqzgslXhYQm5BHfY6mvi0",
+    "archive_id": "1kc4MxSovOE_lA3JvbjJv7UDj1We54MKs",
+    "manifest_id": "1ln0YEoWLQ4CYNuS0EHrszrdjiK9vsZ68",
+    "verified_date": "2026-10-27",
+    "sha256": "b000815ec5a036e3154a40f545ac3173416dcdff543d220b6416b4d2bec31386",
+    "owner_only_verified": true,
+    "download_and_isolated_reader_restore": "passed",
+    "hosted_bucket_restore": "not exercised",
+    "github_attachment_upload": "401 Bad credentials"
   }
 }

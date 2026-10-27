@@ -55,3 +55,7 @@ The hook uses the connected GitHub CLI, strips transient native Git auth headers
 ## Portable Worker example
 
 `wrangler.example.jsonc` documents the basic reader entrypoint and binding. It is an example, not a configured deployment. Set the actual bucket name and account in your Cloudflare environment and configure secrets using the platform's secret manager. This repository contains no Cloudflare credentials and does not automatically migrate hosting.
+
+## Required release validation
+
+The updated pre-push hook also runs commit-bound release checks after mirroring and refuses native push on any failure. Follow RELEASE_GUARDS.md and deploy its exact verified archive, not a separate rebuild. GitHub code storage remains primary; independent content backups now try private GitHub draft attachments first and use the verified private Drive fallback when unavailable. See MAINTENANCE_RUNBOOK.md for the destination and read-back procedure.

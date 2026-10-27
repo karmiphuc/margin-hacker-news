@@ -21,3 +21,7 @@ If the backup index is damaged but immutable objects remain, use a retained dail
 ## Device test
 
 Open the installed Home Screen app on the actual iPhone/iPad, save an edition, and use Check offline readiness. Turn on airplane mode AND turn off Wi-Fi. Close and reopen from Home Screen, then read a saved article, comments and a PDF/image when available. Restore networking and confirm server status. Repeat after clearing site data or an iOS upgrade. Local automated Chromium checks cannot certify actual Safari/Home Screen storage behavior. iOS may evict local content; server backups remain the source of recovery.
+
+## Exercised isolated reader recovery
+
+`node scripts/qa-recovery.mjs ARCHIVE MANIFEST` verifies archive hashes, unpacks into a temporary bucket, establishes a fresh test password, checks anonymous denial and authenticated edition reads/export, and prohibits upstream fetches. The 2026-10-27 Drive download passed with 4 editions / 400 stories / 328 saved articles / 12,350 comments. Original production authentication is not needed. This proves application-level recovery of those bytes, not provisioning/import permissions on a replacement hosted bucket. A hosted recovery rehearsal and physical iOS check remain separate work.

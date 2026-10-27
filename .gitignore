@@ -11,3 +11,5 @@ backups/
 *.jsonl.gz
 
 .restore-*/
+
+.release/

@@ -1,9 +1,10 @@
+import {gitEnvironment} from './lib/release-evidence.mjs';
 // Mirror exact committed sources. Credentials and runtime data never enter this path.
 import {execFileSync} from 'node:child_process';import {readFileSync,writeFileSync,mkdirSync,existsSync,rmSync} from 'node:fs';import {resolve,dirname,join} from 'node:path';
 const options=Object.fromEntries(process.argv.slice(2).reduce((a,v,i,all)=>i%2===0?[...a,[v.replace(/^--/,''),all[i+1]]]:a,[]));
 const root=resolve(options.repo||'.'),reader=resolve(options.reader||'../sites/hn-pocket'),updater=resolve(options.updater||'../sites/margin-updater');
 // A source-repository credential must never be sent to GitHub.
-const env={...process.env};for(const k of Object.keys(env))if(/^GIT_CONFIG_(COUNT|KEY_\d+|VALUE_\d+)$/.test(k)||['GIT_ASKPASS','SSH_ASKPASS'].includes(k))delete env[k];
+const env=gitEnvironment();
 const git=(cwd,...args)=>execFileSync('git',args,{cwd,env,encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim();
 if(git(root,'status','--porcelain'))throw Error('GitHub checkout has uncommitted changes; preserve them before mirroring');
 if(git(root,'remote','get-url','origin')!=='https://github.com/karmiphuc/margin-hacker-news.git')throw Error('Unexpected mirror destination');
