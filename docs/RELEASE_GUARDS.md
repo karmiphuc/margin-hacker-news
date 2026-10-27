@@ -19,3 +19,7 @@ Rollback requires checking the older code against current stored data in isolati
 ## First exercised release, 2026-10-27
 
 GitHub commit `861fadd30b74f2347834a9cc7b1e744eb313a2db` passed 54 reader/tooling tests, 7 updater tests, all browser checks and recovery locally. Independent GitHub Actions run https://github.com/karmiphuc/margin-hacker-news/actions/runs/40428054401 completed successfully. Native reader `656e5752bf6b0d8fd39f83ceab5f81788acbb391` was deployed successfully. Post-deployment anonymous boundaries and authenticated archived-content/health reads passed; capture and backup were healthy. No source requests were made. Historical evidence is in release-evidence/2026-10-27.json; later documentation commits do not make that evidence valid for a new release. The scheduled GitHub smoke job has not yet reached its first scheduled execution.
+
+## Watchdog regression review
+
+The watchdog now honors DTSTART, permits in-progress work only within the two-hour grace period, rejects unsupported recurrence rules/timezones and off-schedule run timestamps, and distinguishes stale retry output from current failures. Five additional regression tests cover these cases. The anonymous production job supports manual workflow dispatch so its actual GitHub runner path can be exercised without waiting for cron. Scheduled task cross-checks are agent-executed runbook instructions, not host-enforced monitoring; a completed task record does not prove an independent backup or notification receipt.
