@@ -5,13 +5,14 @@
     "site_project_id": "appgprj_6add6b2bd5148191bee564f2d750cc9f",
     "url": "https://hn-pocket-archive.karmi-nguyen.chatgpt.site",
     "r2_binding": "BUCKET",
-    "saved_version_id": "appgprj_6add6b2bd5148191bee564f2d750cc9f~appgver_1f5c9c06aaa0819181f8b0578d2e386e",
-    "deployment_id": "appgdep_6adfebecdb248191a088e24b44ce02b9",
+    "saved_version_id": "appgprj_6add6b2bd5148191bee564f2d750cc9f~appgver_5f6d35e5dc048191ab995e123e1d6020",
+    "deployment_id": "appgdep_6adfeda3570081919d44a72186e7b884",
     "readability_update": "Larger bold story titles, darker metadata, 22px article text, full-width tablet navigation and reduced spacing. Offline shell cache v7.",
     "comment_reading_update": {
       "saved_comments": "Separate device-local IndexedDB collection; complete offline copies included in device-data export v2",
       "formatting": "New captures retain Markdown and real comment parent IDs; legacy copies retain available text",
-      "verified": "25 reader tests; desktop, phone and tablet offline save/reload/remove, export/import, and v1 storage upgrade passed"
+      "verified": "25 reader tests; desktop, phone and tablet offline save/reload/remove, export/import, and v1 storage upgrade passed",
+      "regression_review": "27 reader tests and desktop/phone/tablet browser checks passed. Fixed plain-text line breaks/punctuation, explicit root hierarchy, deep nesting width, saved-comment-only offline readiness, cross-tab/export freshness and search leakage."
     }
   },
   "updater": {
