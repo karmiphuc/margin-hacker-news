@@ -28,7 +28,7 @@ Use fresh updater service access as above. GET `/api/health` and `/api/secondary
 
 The updater's R2 binding belongs to its own project, separate from the reader's bucket. Immutable `objects/<sha256>.json` files hold snapshots, including saved articles and comments. `daily/YYYY-MM-DD.json` indexes each successful day's backup, `monthly/YYYY-MM.json` retains the first successful checkpoint of each month. Both and their objects are retained indefinitely. `backup/index.json` is the latest export index; source deletions never prune it. Incomplete source editions are preserved as partial copies and refreshed on later days. Nothing under reader `auth/` is copied. Monthly verification reconstructs copies in a temporary namespace, reads and validates them, then removes only its own temporary objects.
 
-Both buckets use the same hosting provider/account boundary. This is not protection against loss of that whole account; periodically download an archive to storage you control outside the provider.
+Both buckets use the same hosting provider/account boundary. Protection against loss of that whole account now uses the independent export procedure below.
 
 ## Independent content backups: GitHub first, Drive fallback
 

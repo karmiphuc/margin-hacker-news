@@ -1,0 +1,33 @@
+{
+  "format": "margin-release-evidence-v1",
+  "commit": "861fadd30b74f2347834a9cc7b1e744eb313a2db",
+  "createdAt": "2026-10-27T00:42:27.482Z",
+  "runtime": {
+    "node": "v24.19.0",
+    "playwright": "1.62.1",
+    "chromium": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)"
+  },
+  "checks": {
+    "reader-install": "passed",
+    "updater-install": "passed",
+    "reader-build": "passed",
+    "updater-build": "passed",
+    "reader-package": "passed",
+    "updater-package": "passed",
+    "reader-tests": "passed",
+    "updater-tests": "passed",
+    "offline-browser": "passed",
+    "upgrade-browser": "passed",
+    "recovery-drill": "passed"
+  },
+  "artifacts": {
+    ".openai/hosting.json": "93a1f87880e7357a3f78876c0e59235113a79d49d9af0ecccf5e5fa2b78f01a7",
+    "dist/server/index.js": "4b680aae41274e2e8cdb7d7e791a312b8302d21f87382e9500790c10da4e3aff",
+    "dist/.openai/hosting.json": "93a1f87880e7357a3f78876c0e59235113a79d49d9af0ecccf5e5fa2b78f01a7",
+    "dist/release.tar.gz": "f7c08a5da24f2dffaddcb34fb838ddc57495379925ac12fcdf0fd822442c6cc6",
+    "updater/.openai/hosting.json": "be6754131d3c9aaba711891e4b05879d1b1a29461a612338f861c4a1a5f25b29",
+    "updater/dist/server/index.js": "f8872c0dbd8967c1db7cff8a87a27661a5696076af2f7f2b33b07e67819795fc",
+    "updater/dist/.openai/hosting.json": "be6754131d3c9aaba711891e4b05879d1b1a29461a612338f861c4a1a5f25b29",
+    "updater/dist/release.tar.gz": "776d04ec4c542041d639551da71b704f8840fc4aed2f6ecd939def6e11975ac4"
+  }
+}

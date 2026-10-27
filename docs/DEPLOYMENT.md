@@ -40,7 +40,7 @@ node scripts/install-mirror-hooks.mjs /absolute/github-checkout /absolute/reader
 
 Install hooks again in every new native checkout; hooks are local Git configuration and do not travel with clones. Commit source changes, run tests/builds, then push native source. The hook copies committed allowlisted files from both native repositories to GitHub and pushes there first; a failed backup blocks the native push. Never use `--no-verify` for publication. Preserve any existing hooks when integrating. After native push, save/deploy the exact source commit through Sites and verify the returned status. Source mirror records committed code; it is not itself proof of deployment. Daily drift checking reconciles to the actual deployed versions.
 
-The hook uses the connected GitHub CLI, strips transient native Git auth headers, and never copies runtime data, authentication records, or `.env` files. Keep all new credentials in the hosting secret manager. GitHub release uploads/Actions secret management remain unavailable with the original connection; routine backups now use the private updater's separate bucket instead.
+The hook uses the connected GitHub CLI, strips transient native Git auth headers, and never copies runtime data, authentication records, or `.env` files. Keep all new credentials in the hosting secret manager. GitHub release attachment uploads still return 401. Secret-free GitHub Actions is working: the initial full release run passed. Routine backups use the private updater bucket with independent exports to private Drive as fallback.
 
 ## Restore onto a new host
 
