@@ -6,7 +6,7 @@ Save your Margin password and latest recovery code in a password manager. Also k
 
 Lost password: use `/recover` with the latest code. This changes authentication only; all saved server content remains. Lost password AND code: authenticate as the hosting owner, follow `DEPLOYMENT.md` to issue a fresh, short-lived one-time setup link, and configure a new password. Never delete or recreate the content bucket to reset authentication.
 
-Bookmarks/read state live on each device. Export/import them in app settings; importing merges IDs. Signing out clears downloads and device preferences while keeping the server archive intact.
+Bookmarks, saved comments, and read state live on each device. Export/import them in app settings; importing merges IDs and complete saved-comment copies. Saved comments do not sync to server backups; keep the device-data export if clearing storage or changing devices. Signing out clears downloads and device preferences while keeping the server archive intact.
 
 ## Recover content when the primary is unavailable
 

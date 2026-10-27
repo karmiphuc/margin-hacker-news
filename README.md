@@ -5,7 +5,8 @@ Source and recovery backup for [Margin](https://hn-pocket-archive.karmi-nguyen.c
 - Top 100 HN stories, captured at **08:00 and 20:00 UTC**.
 - Readable article copies, supported PDF/image files, and up to 50 comments per story.
 - A recent 10-day calendar plus access to **all retained editions**.
-- Offline downloads, search, bookmarks, and iPhone/iPad home-screen support.
+- Offline downloads, search, article bookmarks, a separate Saved comments collection, and iPhone/iPad home-screen support.
+- Structured Markdown articles and collapsible comment threads with parent links. New captures preserve formatting; existing successful captures are not re-fetched. Saved comments are device-local and included in device-data export/import.
 - Password and recovery-code authentication with no external login in reader flows.
 - Durable server storage independent of passwords; cached source content and conservative request pacing.
 
