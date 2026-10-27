@@ -45,3 +45,11 @@ The archive status panel shows server protection and device downloads separately
 Optional browser QA: run `node scripts/qa-offline.cjs` with Playwright and Chromium available after building. This tests desktop/phone/tablet layouts and offline reopen using synthetic data; it is not a physical iOS certification.
 
 For future deployments, use the GitHub repository's `scripts/install-mirror-hooks.mjs` to attach its source mirror to both native checkouts before pushing. The hook backs up committed source before the hosting push; a scheduled drift check catches deployments from other checkouts. GitHub: https://github.com/karmiphuc/margin-hacker-news .
+
+## Structured reading and saved comments
+
+New captures retain Markdown alongside their original plain-text field (article capture version 3), preserving headings, paragraphs, emphasis, links, lists, quotations and code blocks. Comments include actual parent IDs/authors and depth; older editions infer parents from their retained thread order/depth. Existing successful captures are never re-fetched just to change formatting. Formatting already stripped from old snapshots cannot be reconstructed reliably.
+
+The browser bundles Markdown rendering into the offline app script. Raw HTML is disabled, unsafe link protocols are rejected and image syntax does not load external resources. Comment threads can be collapsed; parent links reveal the parent. Each comment can be saved to a dedicated IndexedDB `savedComments` store, independent of article bookmarks and independent of the downloaded edition. The Saved comments view spans all editions and supports search/removal offline.
+
+IndexedDB upgrades from version 1 to 2 without deleting editions. Saved comments are device-local, included as complete records in device-data export v2 and accepted alongside v1 bookmark/read imports. They are not synchronized to the server. Sign-out clears them with other device data; export before clearing the device. Offline cache version 8 delivers the bundled renderer and new shell together.

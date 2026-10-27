@@ -1,10 +1,12 @@
+import {contentFromHTML} from './markdown.js';
 import {parseHTML} from 'linkedom';
 import {article} from './article.js';
 import {createNetwork,hash,SourcePaused} from './network.js';
 const HN='https://hacker-news.firebaseio.com/v0/';
 const LEASE='capture/lease.json';
 export function slotAt(date=new Date()){const d=new Date(date),h=d.getUTCHours();if(h<8)d.setUTCDate(d.getUTCDate()-1);return d.toISOString().slice(0,10)+'_'+(h>=8&&h<20?'08':'20');}
-export function commentsFrom(tree,ids=[]){const output=[],roots=[...(tree?.children||[])];roots.sort((a,b)=>(ids.indexOf(a.id)<0?999:ids.indexOf(a.id))-(ids.indexOf(b.id)<0?999:ids.indexOf(b.id)));function visit(nodes,depth=0){for(const c of nodes){if(output.length>=50)return;if(c.text&&!c.deleted&&!c.dead){const {document}=parseHTML('<html><body>'+c.text+'</body></html>');output.push({id:c.id,by:c.author||'[deleted]',text:document.body.textContent,depth:Math.min(depth,6)});}visit(c.children||[],depth+1)}}visit(roots);return output;}
+export function commentsFrom(tree,ids=[]){const output=[],roots=[...(tree?.children||[])];roots.sort((a,b)=>(ids.indexOf(a.id)<0?999:ids.indexOf(a.id))-(ids.indexOf(b.id)<0?999:ids.indexOf(b.id)));function visit(nodes,depth=0,parent=null){for(const c of nodes){if(output.length>=50)return;let current=parent;if(c.text&&!c.deleted&&!c.dead){const content=contentFromHTML(c.text);current={id:c.id,by:c.author||'[deleted]',...content,depth,parentId:parent?.id||null,parentBy:parent?.by||null};output.push(current);}visit(c.children||[],depth+1,current)}}visit(roots);return output;}
+
 async function get(bucket,key){return (await bucket.get(key))?.json();}
 async function absent(bucket,key,value){return bucket.put(key,JSON.stringify(value),{onlyIf:{etagDoesNotMatch:'*'}});}
 export async function getSnapshot(bucket,id){for(const prefix of ['snapshots/','backups/']){try{const s=await get(bucket,prefix+id+'.json');if(s)return s;}catch{}}return null;}
@@ -46,7 +48,7 @@ export async function captureEdition(bucket,{date=new Date(),network=createNetwo
         else{try{const response=await network.request('https://hn.algolia.com/api/v1/items/'+item.id,{signal:AbortSignal.timeout(16000)});if(!response.ok)throw Error('Discussion unavailable');comments=commentsFrom(await response.json(),item.kids||[]);await bucket.put(commentKey,JSON.stringify({comments,savedAt:commentsCapturedAt,expires:Date.now()+12*3600000}));}catch{if(cachedComments){comments=cachedComments.comments;commentsCapturedAt=cachedComments.savedAt;}else commentsStatus='unavailable';}}
         let saved;
         if(item.url){saved=await savedArticle(item.url);}
-        else{const {document}=parseHTML('<html><body>'+(item.text||'')+'</body></html>');saved={status:'saved',text:document.body.textContent||'This is a discussion post. Open the comments to read the conversation.',words:0,capturedAt:new Date().toISOString()};}
+        else{const {document}=parseHTML('<html><body>'+(item.text||'')+'</body></html>');saved={status:'saved',format:'markdown',markdown:contentFromHTML(item.text||'').markdown,text:document.body.textContent||'This is a discussion post. Open the comments to read the conversation.',words:0,capturedAt:new Date().toISOString()};}
         return {...metadata,article:saved,comments,commentsStatus,commentsCapturedAt};
       }catch(error){pausedUntil=Math.max(pausedUntil,error.retryAt||Date.now()+60000);return existing;}
     });

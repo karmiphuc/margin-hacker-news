@@ -1,4 +1,4 @@
-const CACHE='margin-shell-v7';
+const CACHE='margin-shell-v8';
 const FILES=['/app.js','/style.css','/manifest.webmanifest','/icon-192.png','/icon-512.png'];
 async function saveShell(cache){const r=await fetch('/',{cache:'no-store'});if(!r.ok||r.headers.get('X-Margin-Shell')!=='reader')throw Error('Unlock Margin before saving the offline shell');await cache.put('/',r)}
 self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(CACHE);await c.addAll(FILES);await saveShell(c);await self.skipWaiting()})()));
