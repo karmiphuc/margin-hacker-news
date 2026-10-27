@@ -41,3 +41,6 @@ header{height:40px}.heading>.eyebrow,.heading>.intro{display:none}.heading h1{fo
 @media(max-width:700px){.comment-replies{margin-left:8px;margin-right:5px;padding-left:7px}.comment-replies .comment-replies{margin-left:0;padding-left:5px}.comment-thread .comment{padding:0 10px 12px}.comment-thread>summary{padding:10px}.comment-thread>summary span{font-size:12px}.comment-body{font-size:17px}.saved-comment-card{padding:14px}.rich-text pre{font-size:13px}.nav-item{font-size:12px;padding:6px}.nav-item>span{font-size:16px}.saved-comment-context strong{font-size:19px}}
 
 body[data-view=savedcomments] .heading>.intro,body[data-view=savedcomments] .heading>.eyebrow,body[data-view=savedcomments] .calendar,body[data-view=savedcomments] .calendar-heading,body[data-view=savedcomments] .week-labels,body[data-view=savedcomments] .archive-label,body[data-view=savedcomments] .calendar-key{display:none}
+
+/* Deep threads retain hierarchy without shrinking the reading column indefinitely. */
+.comment-replies .comment-replies .comment-replies{margin-left:0;margin-right:0;padding-left:0;border-left:0}.comment-replies .comment-replies .comment-replies>.comment-thread{border-left:0;border-right:0;border-radius:0}.comment-thread>summary{overflow-wrap:anywhere}
